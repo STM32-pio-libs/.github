@@ -2,7 +2,7 @@
 
 ## Overview
 
-**STM32-pio-libs** is a collection of reusable libraries for **STM32Cube HAL** and **PlatformIO** based STM32 projects.
+**STM32-pio-libs** is a collection of reusable libraries for **STM32Cube HAL** and **PlatformIO** based STM32 projects. The packages are published on [registry.platformio.org](https://registry.platformio.org/search?q=owner:anurag3301) and can be installed easly with `pio pkg`
 
 ---
 
@@ -23,25 +23,25 @@ Rather than treating each driver as a one-off code dump, the work here is to gra
 
 ## Repositories
 
-* `SSD1306`  
+* [`SSD1306`](https://registry.platformio.org/libraries/anurag3301/STM32-SSD1306)
   Driver for SSD1306 OLED displays. Supports the **SSD1306** controller over I2C and SPI, with a callback-based transport layer.
 
-* `I2C-LCD`  
+* [`I2C-LCD`](https://registry.platformio.org/libraries/anurag3301/I2C-LCD%20STM)
   Driver for HD44780-compatible character LCD modules connected through an I2C backpack, typically using a **PCF8574** I/O expander.
 
-* `gfx-mono`  
+* [`gfx-mono`](https://registry.platformio.org/libraries/anurag3301/GFX-MONO)
   Lightweight monochrome graphics library for 1bpp framebuffers. This is a generic graphics helper and is **not tied to a specific IC**.
 
-* `DS1302-RTC`  
+* [`DS1302-RTC`](https://registry.platformio.org/libraries/anurag3301/RTC-DS1302%20STM32)
   RTC library for the **DS1302** real-time clock IC, including time/date access and RAM read/write support.
 
-* `HC-SR04`  
+* [`HC-SR04`](#)
   Driver for the **HC-SR04** ultrasonic distance sensor.
 
-* `NEO-6M`  
+* [`NEO-6M`](#)
   UART-based helper library for the **u-blox NEO-6M** GPS module.
 
-* `stm32-Delay`  
+* [`stm32-Delay`](https://registry.platformio.org/libraries/anurag3301/STM32%20Delay)
   Delay utility library for STM32Cube HAL projects. This is a **generic STM32 timing helper** and is not tied to a separate external IC.
 
 ---
