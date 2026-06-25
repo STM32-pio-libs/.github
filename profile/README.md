@@ -2,7 +2,7 @@
 
 ## Overview
 
-**STM32-pio-libs** is a collection of reusable libraries for **STM32Cube HAL** and **PlatformIO** based STM32 projects. The packages are published on [registry.platformio.org](https://registry.platformio.org/search?q=owner:anurag3301) and can be installed easly with `pio pkg`
+**STM32-pio-libs** is a collection of reusable libraries for **STM32Cube HAL** and **PlatformIO** based STM32 projects. Packages are published on [registry.platformio.org](https://registry.platformio.org/search?q=owner:anurag3301) and can be installed with `pio pkg`.
 
 ---
 
@@ -21,44 +21,52 @@ Rather than treating each driver as a one-off code dump, the work here is to gra
 
 ---
 
-## Repositories
+## Libraries
 
-* [`SSD1306`](https://registry.platformio.org/libraries/anurag3301/STM32-SSD1306)
-  Driver for SSD1306 OLED displays. Supports the **SSD1306** controller over I2C and SPI, with a callback-based transport layer.
+### Flash Storage
 
-* [`I2C-LCD`](https://registry.platformio.org/libraries/anurag3301/I2C-LCD%20STM)
-  Driver for HD44780-compatible character LCD modules connected through an I2C backpack, typically using a **PCF8574** I/O expander.
+* [**W25Q64-flash**](https://github.com/STM32-pio-libs/W25Q64-flash)
+  Hardware-agnostic driver for the W25Q64 8 MB SPI NOR flash chip. Callback-based SPI transport with no HAL dependency in the library itself. Covers read, write (with automatic page splitting), sector/block/chip erase, and deep power-down.
 
-* [`gfx-mono`](https://registry.platformio.org/libraries/anurag3301/GFX-MONO)
-  Lightweight monochrome graphics library for 1bpp framebuffers. This is a generic graphics helper and is **not tied to a specific IC**.
+* [**W25Q64-lfs**](https://github.com/STM32-pio-libs/W25Q64-lfs)
+  LittleFS block device adapter for W25Q64-flash. Single-call setup via `W25Q_LFS_BuildConfig`, static working buffers, no heap allocation. Pass the resulting `lfs_config` directly to `lfs_mount`.
 
-* [`DS1302-RTC`](https://registry.platformio.org/libraries/anurag3301/RTC-DS1302%20STM32)
-  RTC library for the **DS1302** real-time clock IC, including time/date access and RAM read/write support.
+* [**littlefs**](https://github.com/STM32-pio-libs/littlefs)
+  Upstream LittleFS v2.11.3 repackaged as a PlatformIO library. Pulled in automatically as a transitive dependency of W25Q64-lfs.
 
-* [`HC-SR04`](#)
-  Driver for the **HC-SR04** ultrasonic distance sensor.
+### Display
 
-* [`NEO-6M`](#)
-  UART-based helper library for the **u-blox NEO-6M** GPS module.
+* [**SSD1306**](https://github.com/STM32-pio-libs/SSD1306)
+  Driver for SSD1306 OLED displays over I2C or SPI. Callback-based transport, full-screen and partial-region bitmap updates, and display control APIs (contrast, invert, power).
 
-* [`stm32-Delay`](https://registry.platformio.org/libraries/anurag3301/STM32%20Delay)
-  Delay utility library for STM32Cube HAL projects. This is a **generic STM32 timing helper** and is not tied to a separate external IC.
+* [**gfx-mono**](https://github.com/STM32-pio-libs/gfx-mono)
+  Lightweight monochrome graphics library for 1 bpp framebuffers. Pixels, rectangles, bitmap drawing, nearest-neighbor bitmap scaling, and scalable A–Z / 0–9 glyphs. A flush callback decouples it from any specific display IC — pairs naturally with SSD1306.
+
+### Peripherals
+
+* [**I2C-LCD**](https://github.com/STM32-pio-libs/I2C-LCD)
+  Driver for HD44780-compatible character LCD modules connected through an I2C backpack (typically PCF8574). Callback-based I2C write and delay hooks. Cursor positioning, text output, custom CGRAM characters, backlight, and display controls.
+
+* [**DS1302-RTC**](https://github.com/STM32-pio-libs/DS1302-RTC)
+  Driver for the DS1302 real-time clock IC using GPIO bit-bang over CE/IO/SCLK. Individual and burst time/date accessors, 12/24-hour mode switching, and 31-byte battery-backed RAM read/write.
+
+* [**NEO-6M**](https://github.com/STM32-pio-libs/NEO-6M)
+  TinyGPS-style NMEA parser and interrupt-driven UART receive helper for the u-blox NEO-6M GPS module. Decodes RMC and GGA sentences: location, UTC date/time, speed, course, altitude, satellite count, HDOP, and fix quality.
+
+### Utilities
+
+* [**stm32-Delay**](https://github.com/STM32-pio-libs/stm32-Delay)
+  Microsecond and millisecond delay functions for STM32Cube HAL projects.
 
 ---
 
-## Current Work
+## Reference Projects
 
-The current effort in this organization is centered on improving older STM32 libraries so they match the quality of the newer ones.
+* [**stm32f411-blackpill-base**](https://github.com/STM32-pio-libs/stm32f411-blackpill-base)
+  Minimal PlatformIO project template for the STM32F411CE BlackPill board. Clock configured at 100 MHz over HSE with PLL, UART1 printf/scanf via syscall stubs. Use as a starting point for new BlackPill projects.
 
-That includes:
-
-* removing fragile include-order dependencies
-* replacing HAL-specific assumptions in public headers where possible
-* adding complete examples
-* writing proper documentation instead of placeholders
-* making libraries easier to reuse across STM32 families
-
-Recent work in this direction includes making the `I2C-LCD` driver hardware-agnostic in the same style as the `SSD1306` driver, with callback-based transport and dedicated examples.
+* [**F411-W25Q64-lfs-cli**](https://github.com/STM32-pio-libs/F411-W25Q64-lfs-cli)
+  Interactive filesystem shell for the STM32F411CE BlackPill backed by a W25Q64 flash chip running LittleFS. Shell commands: `ls`, `lsr`, `cat`, `touch`, `mkdir`, `rm`, `cd`, `pwd`, `info`. Includes `pcfstool`, a Linux companion tool for transferring files to and from the board over UART.
 
 ---
 
